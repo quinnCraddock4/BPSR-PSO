@@ -35,9 +35,32 @@ export class PacketInterceptor {
             const device_num = await findDefaultNetworkDevice(devices);
             if (device_num !== null && device_num !== undefined) {
                 num = device_num;
-                console.log(`Using network interface: ${num} - ${devices[num].description}`);
+                const device = devices[num];
+                console.log(`Using network interface: ${num} - ${device.description}`);
+                
+                // Log additional information about the selected interface
+                if (device.addresses && device.addresses.length > 0) {
+                    console.log(`Interface addresses: ${device.addresses.map(addr => addr.addr).join(', ')}`);
+                }
+                
+                // Check if this is a VPN interface
+                const isVpnInterface = device.description && (
+                    device.description.toLowerCase().includes('vpn') ||
+                    device.description.toLowerCase().includes('tunnel') ||
+                    device.description.toLowerCase().includes('tun') ||
+                    device.description.toLowerCase().includes('openvpn') ||
+                    device.description.toLowerCase().includes('wireguard')
+                );
+                
+                if (isVpnInterface) {
+                    console.log('VPN interface detected - DPS tracking should work with VPN enabled');
+                    logger.info('VPN interface detected - DPS tracking should work with VPN enabled');
+                }
             } else {
-                return reject(new Error('Default network interface not found!'));
+                const errorMsg = 'Default network interface not found! This may be due to VPN configuration. Please ensure your VPN is properly configured and try running the application as administrator.';
+                console.error(errorMsg);
+                logger.error(errorMsg);
+                return reject(new Error(errorMsg));
             }
 
             if (!zlib.zstdDecompressSync) {

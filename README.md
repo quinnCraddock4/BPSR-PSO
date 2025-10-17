@@ -7,7 +7,11 @@ Provides a useful GUI to track DPS / HPS for nearby players
 
 ## About the Project
 
-This is a standalone application and does not interface with BPSR or modify any of its files. It analyzes packet while in transit. 
+This is a standalone application and does not interface with BPSR or modify any of its files. It analyzes packet while in transit.
+
+## VPN Compatibility
+
+This application now supports VPN connections! The enhanced network interface detection automatically detects and works with VPN adapters including OpenVPN, WireGuard, and popular commercial VPN services. See [VPN_COMPATIBILITY.md](VPN_COMPATIBILITY.md) for detailed information. 
 
 ## Getting Started
 
@@ -49,3 +53,14 @@ To start the application, run the following command from the project root:
 
 ```bash
 npm start
+```
+
+## Testing VPN Compatibility
+
+To test if the application works with your VPN connection, run:
+
+```bash
+npm run test-vpn
+```
+
+This will show you which network interfaces are detected and whether VPN adapters are properly recognized.

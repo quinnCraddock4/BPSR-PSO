@@ -11,7 +11,8 @@
         "publish": "electron-forge publish",
         "lint": "echo \"No linting configured\"",
         "format": "prettier --write \"**/*.{js,json,html}\"",
-        "check-format": "prettier --check \"**/*.{js,json,html}\""
+        "check-format": "prettier --check \"**/*.{js,json,html}\"",
+        "test-vpn": "node test-vpn-detection.js"
     },
     "config": {
         "forge": {
